@@ -1,0 +1,16 @@
+#navegacion{
+	border-radius: 0;
+}
+.bloque_contenido{
+	padding: 5em;
+
+}
+
+.login_form{
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0,0,0,.5);
+	max-width: 40%;
+	padding: 2em;
+	margin-left: 30%;
+	margin-top: 5%;
+}

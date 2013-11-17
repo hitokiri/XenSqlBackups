@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block titulo %} Login {% endblock titulo %}
+{% block contenido %}
+
+	<div class="row">
+		<div class="login_form">
+
+			<form action="" method="POST" role="form">
+				<legend>Inicio de Secion</legend>
+
+				<div class="form-group">
+					<label for="usuario">Usuario</label>
+					<input type="text" class="form-control" id="usuario" placeholder="Usuario" required='required' title="Debe ingresar un usuario valido">
+					<label for="inputId_password">Contraseña</label>
+					<input type="password" name="id_password" id="inputId_password" class="form-control" required="required" title="debe colocar un password valido" placeholder = 'password'>
+				</div>
+
+
+
+				<button type="submit" class="btn btn-primary">Iniciar Secion</button>
+			</form>
+		</div>
+	</div>
+{% endblock contenido %}
