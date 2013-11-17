@@ -30,18 +30,23 @@
 				<li><a href="#">Link</a></li>
 			</ul>
 
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">Link</a></li>
+			<ul class="nav navbar-nav navbar-right" id ='caja_usuario'>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role='button'>Dropdown <b class="caret"></b></a>
-					<span class="dropdown-arrow dropdown-arrow-inverse"></span>
-					<ul class="dropdown-menu" role='menu'>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role='button'>Dropdown <span class="caret"></span></a>
 
+					<span class="dropdown-arrow dropdown-arrow-inverse " id ='mio_flecha'></span>
+					<ul class="dropdown-menu " id='mio_menu' role='menu'>
 						<li><a href="#">Action</a></li>
 						<li><a href="#">Another action</a></li>
 						<li><a href="#">Something else here</a></li>
 						<li><a href="#">Separated link</a></li>
 					</ul>
+				</li>
+				<li>{% if user.is_authenticated %}
+							{{user.username|title}}(<a href="{% url 'master:logout' %} ">Salir</a>)
+					{% else %}
+							<div class="usuario">Anonimo (<a href="{%url 'master:login' %}">Iniciar</a>)</div>
+					{% endif %}
 				</li>
 			</ul>
 		</div><!-- /.navbar-collapse -->

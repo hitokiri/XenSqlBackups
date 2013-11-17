@@ -14,3 +14,20 @@
 	margin-left: 30%;
 	margin-top: 5%;
 }
+#mio_flecha{
+	margin-top: 0;
+	right: 20px;
+}
+
+#mio_menu{
+	margin-top: 8px !important;
+	left: -40%;
+}
+
+.usuario{
+	color: white;
+	padding-top: 8%;
+}
+#caja_usuario{
+	margin-right: 2%;
+}
