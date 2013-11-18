@@ -1,1 +1,21 @@
 {% extends "base.html" %}
+{% block titulo %}configuracion{% endblock titulo %}
+{% block scriptExtra %}
+
+
+
+<script src="{{ STATIC_URL }}js/bootstrap-select.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-switch.js"></script>
+<script src="{{ STATIC_URL }}js/flatui-checkbox.js"></script>
+<script src="{{ STATIC_URL }}js/flatui-radio.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.tagsinput.js"></script>
+<script src="{{ STATIC_URL }}js/application.js"></script>
+{% endblock scriptExtra %}
+
+{% block contenido %}
+	{% for n in lista_db  %}
+		{{n}} <br>
+	{% endfor %}
+	<input name="tagsinput" class="tagsinput" value="Clean,Fresh,Modern,Unique,cascos" id="tags1384746038814" >
+
+{% endblock contenido %}

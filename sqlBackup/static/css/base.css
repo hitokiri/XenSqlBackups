@@ -10,7 +10,7 @@
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0,0,0,.5);
 	max-width: 40%;
-	padding: 2em;
+	padding: 3% 3% 3% 5%;
 	margin-left: 30%;
 	margin-top: 5%;
 }
@@ -30,4 +30,18 @@
 }
 #caja_usuario{
 	margin-right: 2%;
+}
+
+#id_password{
+	width: 80%;
+}
+#id_usuario{
+	width: 80%;
+}
+form legend{
+	width: 90%;
+}
+
+.login_campos{
+	padding-left: 10%;
 }
