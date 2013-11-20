@@ -5,14 +5,16 @@
 	<div class="row">
 		<div class="login_form">
 
-			<form action="" method="POST" role="form">
+			<form action="" method="POST" role="form">{%csrf_token%}
 				<legend>Inicio de Secion</legend>
 
 				<div class="form-group login_campos">
 					<label for="id_usuario">Usuario</label>
-					<input type="text" class="form-control input-sm" id="id_usuario" placeholder="Usuario" required='required' title="Debe ingresar un usuario valido">
+
+					<input type="text" class="form-control input-sm" id="id_usuario" placeholder="Usuario" required='required' title="Debe ingresar un usuario valido" name="usuario">
 					<label for="id_password">Contraseña</label>
-					<input type="password" name="id_password" id="id_password" class="form-control input-sm" required="required" title="debe colocar un password valido" placeholder = 'password'>
+
+					<input type="password" name="password" id="id_password" class="form-control input-sm" required="required" title="debe colocar un password valido" placeholder = 'password' >
 				</div>
 
 
@@ -21,4 +23,5 @@
 			</form>
 		</div>
 	</div>
+	{{direccion}}
 {% endblock contenido %}

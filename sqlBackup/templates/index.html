@@ -13,9 +13,7 @@
 {% endblock scriptExtra %}
 
 {% block contenido %}
-	{% for n in lista_db  %}
-		{{n}} <br>
-	{% endfor %}
-	<input name="tagsinput" class="tagsinput" value="Clean,Fresh,Modern,Unique,cascos" id="tags1384746038814" >
+	<h3>seleccione las bases de dato a Salvar</h3>
+	<input name="tagsinput" class="tagsinput" value={% for n in lista_db  %}{{n}},{% endfor %} id="" >
 
 {% endblock contenido %}
