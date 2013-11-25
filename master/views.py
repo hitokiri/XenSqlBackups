@@ -2,40 +2,93 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
+from master.forms import LoginForm, SalvadoForm, DatosForm
+from master.decorators import datos_decorator
 import shlex
 import subprocess
-from master.forms import FormLogin
 import os
 
+
+@login_required(login_url = '/login')
+@datos_decorator
 def vista_index(request):
+	error_datos = ""
 	cnf = '/home/hiko/Escritorio/archivo.cnf'
 	filepath = '/home/hiko/Escritorio/salida.txt'
 	no_backup = ['Database', 'information_schema', 'performance_schema', 'test', 'mysql']
 	args = shlex.split("mysql --defaults-extra-file=%s --execute='show databases'" % cnf)
-
 	p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-	dump_output= p.communicate()[0]
+	dump_output, error_datos = p.communicate()
 	lista_db = dump_output.strip().split('\n')
 	for item in no_backup:
 	      lista_db.remove(item)
-	ctx = {'lista_db' : lista_db}
+	if request.method == 'POST':
+		formulario = SalvadoForm(request.POST)
+		if formulario.is_valid():
+			dato = formulario.save(commit =False)
+			print dato.base_nombre
+			return  HttpResponseRedirect('/')
+	else:
+		formulario = SalvadoForm()
+	ctx = {'lista_db' : lista_db, 'formulario': formulario}
 	return render_to_response('index.html', ctx, context_instance = RequestContext(request))
 
-def vista_login(request):
+@login_required(login_url = '/login')
+def vista_listar_buscar(request):
+	return render_to_response('mostrar_buscar.html',context_instance = RequestContext(request))
 
+@login_required(login_url = '/login')
+def vista_logout(request):
+	try:
+		logout_salir = request.META['HTTP_REFERER'].split('http://'+request.META['HTTP_HOST'])[1][:-1]
+		logout(request)
+		return HttpResponseRedirect('/login')
+
+	except KeyError:
+		return HttpResponseRedirect('/')
+
+def vista_login(request):
+	try:
+		meta = request.META['QUERY_STRING'].split('=')[1]
+	except IndexError:
+		meta = None
+	error 	= ''
+	vista 	= 'Login'
 	if request.method == 'POST':
-		formulario = FormLogin(request.POST)
+		formulario = LoginForm(request.POST)
 		if formulario.is_valid():
-			password = None
-			usuario = formulario.cleaned_data['usuario']
-			password = formulario.cleaned_data['password']
-			return HttpResponseRedirect('/login')
+			usuario 	= formulario.cleaned_data['usuario']
+			password 	= formulario.cleaned_data['password']
+			user 		=  authenticate(username = usuario, password = password)
+			if user:
+				if user.is_active:
+					login(request, user)
+					if meta:
+						return HttpResponseRedirect(meta)
+					else:
+						return HttpResponseRedirect('/login')
+			else:
+				error='El usuario o la contraseña son erroneos, Por favor ingrese los datos correctamente'
 	else:
 		direccion = os.path.dirname(os.path.dirname(__file__))
-		password = ''
-		formulario = FormLogin()
-	ctx = {'formulario': formulario, 'direccion': direccion}
+		formulario = LoginForm()
+		print meta
+	ctx = {'formulario': formulario, 'error': error, 'vista': vista}
 	return render_to_response('login.html',ctx, context_instance = RequestContext(request))
 
+@login_required(login_url = '/login')
 def vista_datos_de_conexion(request):
-	return render_to_response('datos.html',context_instance = RequestContext(request))
+	error= ''
+	if request.method == 'POST':
+		formulario = DatosForm(request.POST)
+		if formulario.is_valid():
+			formulario.save()
+		else:
+			error = 'Los datos ingresados no son correctos'
+	else:
+		formulario = DatosForm()
+	ctx = {'formulario': formulario, 'error': error}
+
+	return render_to_response('datos.html', ctx, context_instance = RequestContext(request))

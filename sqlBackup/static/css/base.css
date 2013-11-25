@@ -38,10 +38,17 @@
 #id_usuario{
 	width: 80%;
 }
+#id_host{
+	width: 80%;
+}
 form legend{
 	width: 90%;
 }
 
 .login_campos{
 	padding-left: 10%;
+}
+
+.boton_salir{
+	padding-left: 30%;
 }

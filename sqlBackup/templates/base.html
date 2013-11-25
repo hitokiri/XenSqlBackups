@@ -27,7 +27,7 @@
 		<div class="collapse navbar-collapse ">
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="{%url 'master:index' %}">Crear Respaldo</a></li>
-				<li><a href="#">Link</a></li>
+				<li><a href="{% url 'master:listar' %} ">Listar</a></li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right" id ='caja_usuario'>
@@ -43,7 +43,8 @@
 					</ul>
 				</li>
 				<li>{% if user.is_authenticated %}
-							{{user.username|title}}(<a href="{% url 'master:logout' %} ">Salir</a>)
+							<div class="usuario">{{user.username|title}}(<a href="{% url 'master:logout' %} ">Salir</a>)</div>
+
 					{% else %}
 							<div class="usuario">Anonimo (<a href="{%url 'master:login' %}">Iniciar</a>)</div>
 					{% endif %}

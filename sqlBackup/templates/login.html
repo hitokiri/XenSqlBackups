@@ -1,13 +1,23 @@
 {% extends "base.html" %}
 {% block titulo %} Login {% endblock titulo %}
 {% block contenido %}
+	{% if user.is_authenticated %}
+		<div class="row">
+			<div class="login_form" >
+				<div class="boton_salir">
+					<a href="{% url 'master:logout' %} " class="btn btn-danger"> Cerrar Secion</a>
 
+				</div>
+			</div>
+		</div>
+
+	{% else %}
 	<div class="row">
 		<div class="login_form">
 
 			<form action="" method="POST" role="form">{%csrf_token%}
 				<legend>Inicio de Secion</legend>
-
+				{{error}}
 				<div class="form-group login_campos">
 					<label for="id_usuario">Usuario</label>
 
@@ -23,5 +33,8 @@
 			</form>
 		</div>
 	</div>
+	{{meta}}
+	{% endif %}
+
 	{{direccion}}
 {% endblock contenido %}

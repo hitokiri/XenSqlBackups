@@ -1,1 +1,25 @@
 {% extends "base.html" %}
+{% block contenido %}
+<div class="row">
+	<div class="login_form">
+
+		<form action="" method="post"> {% csrf_token %}
+			<legend>Datos Servidor</legend>
+			{{error}}
+			<div class="form-group login_campos">
+				{{formulario.host.label}}
+				{{formulario.host.error}}
+				<input type="text" class="form-control input-sm" id="id_host" value='localhost' required='required' title="Debe ingresar un usuario valido" name="host">
+				{{formulario.usuario.label}}
+				{{formulario.usuario.error}}
+				<input type="text" class="form-control input-sm" id="id_usuario" placeholder="Usuario" required='required' title="Debe ingresar un usuario valido" name="usuario">
+				{{formulario.password.label}}
+				{{formulario.password.error}}
+				<input type="password" class="form-control input-sm" id="id_password" placeholder="Password" required='required' title="Debe ingresar un password valido" name="password">
+			</div>
+			<input type="submit" value="Guardar" class="btn btn-primary">
+		</form>
+	</div>
+</div>
+
+{% endblock contenido %}
