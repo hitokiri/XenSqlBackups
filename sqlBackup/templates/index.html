@@ -1,33 +1,36 @@
 {% extends "base.html" %}
-{% block titulo %}configuracion{% endblock titulo %}
-{% block scriptExtra %}
-
-
-
-<script src="{{ STATIC_URL }}js/bootstrap-select.js"></script>
-<script src="{{ STATIC_URL }}js/bootstrap-switch.js"></script>
-<script src="{{ STATIC_URL }}js/flatui-checkbox.js"></script>
-<script src="{{ STATIC_URL }}js/flatui-radio.js"></script>
-<script src="{{ STATIC_URL }}js/jquery.tagsinput.js"></script>
-<script src="{{ STATIC_URL }}js/application.js"></script>
-{% endblock scriptExtra %}
 
 {% block contenido %}
-	<h3>seleccione las bases de dato a Salvar</h3>
-
+	<h2>Systema de Backups para mysql</h2>
 	<div class="row">
 	<div class="login_form">
-		<form action="" method="POST" role="form"> {%csrf_token%}
-			<legend>Backups</legend>
 
-			<div class="form-group">
-				<input name="base_nombre" class="tagsinput" value={% for n in lista_db  %}{{n}},{% endfor %} id="id_base_nombre" >
-
+		<div class="row">
+			<div class="row">
+				<div class="col-xs-10">
+					<span>Esta instalado Mysql ? </span>
+				</div>
+				<div class="col-xs-1">{% if  instalado == '' %}<span class="glyphicon glyphicon-check" title = 'si'></span> {% else %}<span class="glyphicon glyphicon-unchecked" title = 'no'></span> {% endif %}</div>
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
+			<div class="row">
+				<div class="col-xs-10">
+					<span>Esta corriendo Mysql ? </span>
+				</div>
+				<div class="col-xs-1">{% if  estado == 'start' %}<span class="glyphicon glyphicon-check" title = 'si'></span> {% else %}<span class="glyphicon glyphicon-unchecked" title = 'no'></span> {% endif %}</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-10">
+					<span>Datos de Host</span>
+				</div>
+				<div class="col-xs-1">{% if  datoshost > 0 %}<span class="glyphicon glyphicon-check" title = 'si'></span> {% else %}<span class="glyphicon glyphicon-unchecked" title = 'no'></span> {% endif %}</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-10">
+					<span>Backups Creados</span>
+				</div>
+				<div class="col-xs-1">{% if  backup > 0 %}<span class="glyphicon glyphicon-check" title = 'si'></span> {% else %}<span class="glyphicon glyphicon-unchecked" title = 'no'></span> {% endif %}</div>
+			</div>
+		</div>
 	</div>
-</div>
-{{error_datos}}
-
+	</div>
 {% endblock contenido %}

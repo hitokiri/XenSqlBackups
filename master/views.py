@@ -6,14 +6,26 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from master.forms import LoginForm, SalvadoForm, DatosForm
 from master.decorators import datos_decorator
+from master.models import DatosHost, Backup
 import shlex
 import subprocess
 import os
 
 
+def vista_index(request):
+	args = shlex.split("service mysql status")
+	p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	dump_output, error = p.communicate()
+	instalado = error
+	estado = dump_output.split('/')[0].split(' ')[1]
+	datoshost = DatosHost.objects.all().count()
+	backup = Backup.objects.all().count()
+	ctx = {'instalado': instalado, 'estado': estado, 'datoshost': datoshost, 'backup': backup}
+	return render_to_response('index.html', ctx, context_instance = RequestContext(request))
+
 @login_required(login_url = '/login')
 @datos_decorator
-def vista_index(request):
+def vista_crear_conexion(request):
 	error_datos = ""
 	cnf = '/home/hiko/Escritorio/archivo.cnf'
 	filepath = '/home/hiko/Escritorio/salida.txt'
@@ -33,11 +45,12 @@ def vista_index(request):
 	else:
 		formulario = SalvadoForm()
 	ctx = {'lista_db' : lista_db, 'formulario': formulario}
-	return render_to_response('index.html', ctx, context_instance = RequestContext(request))
+	return render_to_response('backups.html', ctx, context_instance = RequestContext(request))
 
 @login_required(login_url = '/login')
 def vista_listar_buscar(request):
 	return render_to_response('mostrar_buscar.html',context_instance = RequestContext(request))
+
 
 @login_required(login_url = '/login')
 def vista_logout(request):
@@ -80,11 +93,19 @@ def vista_login(request):
 
 @login_required(login_url = '/login')
 def vista_datos_de_conexion(request):
+	try:
+		meta = request.META['QUERY_STRING'].split('=')[1]
+	except IndexError:
+		meta = None
 	error= ''
 	if request.method == 'POST':
 		formulario = DatosForm(request.POST)
 		if formulario.is_valid():
 			formulario.save()
+			if meta:
+				return HttpResponseRedirect(meta)
+			else:
+				return HttpResponseRedirect('/')
 		else:
 			error = 'Los datos ingresados no son correctos'
 	else:

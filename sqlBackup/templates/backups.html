@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block titulo %}configuracion{% endblock titulo %}
+{% block scriptExtra %}
+<script src="{{ STATIC_URL }}js/bootstrap-select.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-switch.js"></script>
+<script src="{{ STATIC_URL }}js/flatui-checkbox.js"></script>
+<script src="{{ STATIC_URL }}js/flatui-radio.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.tagsinput.js"></script>
+<script src="{{ STATIC_URL }}js/application.js"></script>
+{% endblock scriptExtra %}
+
+{% block contenido %}
+	<h3>seleccione las bases de dato a Salvar</h3>
+
+	<div class="row">
+	<div class="login_form">
+		<form action="" method="POST" role="form"> {%csrf_token%}
+			<legend>Backups</legend>
+
+			<div class="form-group">
+				<input name="base_nombre" class="tagsinput" value={% for n in lista_db  %}{{n}},{% endfor %} id="id_base_nombre" >
+
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+</div>
+{{error_datos}}
+
+{% endblock contenido %}

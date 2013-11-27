@@ -6,4 +6,5 @@ urlpatterns = patterns('master.views',
 	url(r'^datos/conexion', 'vista_datos_de_conexion', name = 'conexion'),
 	url(r'^logout/$', 'vista_logout', name = 'logout'),
 	url(r'^backups/listado/$', 'vista_listar_buscar', name = 'listar'),
+	url(r'^backups/crear/$', 'vista_crear_conexion', name = 'crear_backups'),
 	)
