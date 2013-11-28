@@ -4,8 +4,11 @@
 	<meta charset="UTF-8">
 	<title>{% block titulo %}Base{% endblock titulo %}</title>
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/base.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/docs.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css ">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/flat-ui.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.ui.all.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/demos.css">
 	{% block cssExtra %}{% endblock cssExtra %}
 
 </head>
@@ -32,10 +35,8 @@
 
 					<span class="dropdown-arrow dropdown-arrow-inverse " id ='mio_flecha'></span>
 					<ul class="dropdown-menu " id='mio_menu' role='menu'>
-						<li class="active"><a href="{%url 'master:crear_backups' %}">Crear Respaldo</a></li>
+						<li class=""><a href="{%url 'master:crear_backups' %}">Crear Respaldo</a></li>
 						<li><a href="{% url 'master:listar' %} ">Listar</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li><a href="#">Separated link</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -59,11 +60,26 @@
 	{% block contenido %}{% endblock contenido %}
 </div>
 
-<script src="{{ STATIC_URL }}js/jquery-1.8.3.min.js "></script>
+<script src="{{ STATIC_URL }}js/jquery-1.10.2.min.js "></script>
 <script src="{{ STATIC_URL }}js/jquery-ui-1.10.3.custom.js"></script>
 <script src="{{ STATIC_URL }}js/bootstrap.min.js "></script>
+<script src="{{ STATIC_URL }}js/jquery.ui.touch-punch.min.js"></script>
+<script>
+	// increase the default animation speed to exaggerate the effect
+	$.fx.speeds._default = 1000;
+	$(function() {
+		$( "#dialog" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			hide: "explode"
+		});
 
-
+		$( "#opener" ).click(function() {
+			$( "#dialog" ).dialog( "open" );
+			return false;
+		});
+	});
+</script>
 {% block scriptExtra %}{% endblock scriptExtra %}
 </body>
 </html>

@@ -12,3 +12,12 @@ def datos_decorator(funcion):
 			return funcion(request)
 	return intermedio
 
+def crossite_redirection_decorator(funcion):
+	def intermedio(request, *args, **kwarks):
+		try:
+			request.META['HTTP_REFERER']
+		except KeyError:
+			return HttpResponseRedirect('/')
+		else:
+			return funcion(request)
+	return intermedio

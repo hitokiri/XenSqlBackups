@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from master.forms import LoginForm, SalvadoForm, DatosForm
-from master.decorators import datos_decorator
+from master.decorators import datos_decorator, crossite_redirection_decorator
 from master.models import DatosHost, Backup
 import shlex
 import subprocess
@@ -25,6 +25,7 @@ def vista_index(request):
 
 @login_required(login_url = '/login')
 @datos_decorator
+@crossite_redirection_decorator
 def vista_crear_conexion(request):
 	error_datos = ""
 	cnf = '/home/hiko/Escritorio/archivo.cnf'
@@ -48,11 +49,13 @@ def vista_crear_conexion(request):
 	return render_to_response('backups.html', ctx, context_instance = RequestContext(request))
 
 @login_required(login_url = '/login')
+@crossite_redirection_decorator
 def vista_listar_buscar(request):
 	return render_to_response('mostrar_buscar.html',context_instance = RequestContext(request))
 
 
 @login_required(login_url = '/login')
+@crossite_redirection_decorator
 def vista_logout(request):
 	try:
 		logout_salir = request.META['HTTP_REFERER'].split('http://'+request.META['HTTP_HOST'])[1][:-1]
@@ -92,6 +95,7 @@ def vista_login(request):
 	return render_to_response('login.html',ctx, context_instance = RequestContext(request))
 
 @login_required(login_url = '/login')
+@crossite_redirection_decorator
 def vista_datos_de_conexion(request):
 	try:
 		meta = request.META['QUERY_STRING'].split('=')[1]
