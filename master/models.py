@@ -15,3 +15,6 @@ class DatosHost(models.Model):
 		verbose_name 		= ('DatosHost')
 		verbose_name_plural = ('DatosHosts')
 
+class IpServer(models.Model):
+	ip 						= models.GenericIPAddressField()
+	hora_y_fecha 			= models.DateTimeField(auto_now=True)

@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css ">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/flat-ui.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.ui.all.css">
-	<link rel="stylesheet" href="{{ STATIC_URL }}css/demos.css">
+
 	{% block cssExtra %}{% endblock cssExtra %}
 
 </head>
@@ -64,22 +64,7 @@
 <script src="{{ STATIC_URL }}js/jquery-ui-1.10.3.custom.js"></script>
 <script src="{{ STATIC_URL }}js/bootstrap.min.js "></script>
 <script src="{{ STATIC_URL }}js/jquery.ui.touch-punch.min.js"></script>
-<script>
-	// increase the default animation speed to exaggerate the effect
-	$.fx.speeds._default = 1000;
-	$(function() {
-		$( "#dialog" ).dialog({
-			autoOpen: false,
-			show: "blind",
-			hide: "explode"
-		});
 
-		$( "#opener" ).click(function() {
-			$( "#dialog" ).dialog( "open" );
-			return false;
-		});
-	});
-</script>
 {% block scriptExtra %}{% endblock scriptExtra %}
 </body>
 </html>

@@ -1,5 +1,6 @@
 # Django settings for sqlBackup project.
 import os
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -121,7 +122,9 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'master',
-    'south'
+    'south',
+    'django_cron',
+    'master.cron_jobs'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -154,3 +157,16 @@ LOGGING = {
         },
     }
 }
+
+#Email
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'info.hitokiri@gmail.com'
+EMAIL_HOST_PASSWORD = '%django#:informacion'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+#
+# CRON_CLASSES = [
+#     'master.cron_jobs'
+# ]
