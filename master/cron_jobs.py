@@ -25,7 +25,7 @@ def job_function():
 			ip_history.save()
 
 sched = Scheduler(daemonic=True)
-sched.add_cron_job(job_function,  minute='*')
+sched.add_cron_job(job_function,  minute='5')
 sched.configure()
 try:
     sched.start()

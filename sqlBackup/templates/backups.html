@@ -29,10 +29,10 @@
 			</legend>
 
 			<div class="form-group">
-				<input name="base_nombre" class="tagsinput" value={% for n in lista_db  %}{{n}},{% endfor %} id="id_base_nombre" >
+				<input name="base_nombre" class="tagsinput" value={% for n in lista_db  %}{{n}},{% endfor %} id="id_base_nombre" required='required'>
 
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-primary">Crear</button>
 		</form>
 	</div>
 </div>
@@ -43,10 +43,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Ayuda</h4>
       </div>
       <div class="modal-body">
-        ...
+        {{textoayuda}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

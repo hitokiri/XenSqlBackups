@@ -123,7 +123,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'master',
     'south',
-    'django_cron',
     'master.cron_jobs'
 )
 
@@ -170,3 +169,4 @@ EMAIL_USE_TLS = True
 # CRON_CLASSES = [
 #     'master.cron_jobs'
 # ]
+DIRECCION_BASE = os.path.join(os.path.dirname(__file__), 'static/'),

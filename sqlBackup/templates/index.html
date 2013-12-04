@@ -4,7 +4,15 @@
 	<h2>Systema de Backups para mysql</h2>
 	<div class="row">
 	<div class="login_form">
+		<legend>
 
+				<div class="row">
+					<div class="col-xs-10 col-sm-10">Datos Server</div>
+					<div class="col-xs-2 col-sm-2">
+						<span class='ayuda_form glyphicon glyphicon-info-sign' data-toggle="modal" data-target="#myModal" title="Ayuda" > </span>
+					</div>
+				</div>
+		</legend>
 		<div class="row">
 			<div class="row">
 				<div class="col-xs-10 col-sm-10">
@@ -33,4 +41,21 @@
 		</div>
 	</div>
 	</div>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Ayuda</h4>
+      </div>
+      <div class="modal-body">
+        {{textoayuda}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 {% endblock contenido %}
