@@ -18,14 +18,17 @@ def job_function():
 			ip_history 		= IpServer()
 			ip_history.ip 	= myip
 			ip_history.save()
-			correo = send_mail('cambio de Ip', myip, 'info hiko',['lastvnm@gmail.com'], fail_silently=True)
+			correo = send_mail('cambio de Ip', myip, 'Xendra info Cambio de ip',['lastvnm@gmail.com'], fail_silently=True)
 		if not myip == ip_history.ip:
-			correo = send_mail('cambio de Ip', myip, 'info hiko',['lastvnm@gmail.com'], fail_silently=True)
+			correo = send_mail('cambio de Ip', myip, 'Xendra info Cambio de ip',['lastvnm@gmail.com'], fail_silently=True)
 			ip_history.ip = myip
 			ip_history.save()
 
+def borrar_antiguos():
+	pass
+
 sched = Scheduler(daemonic=True)
-sched.add_cron_job(job_function,  minute='5')
+sched.add_cron_job(job_function,  minute='*/5')
 sched.configure()
 try:
     sched.start()

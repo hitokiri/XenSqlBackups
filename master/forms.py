@@ -1,7 +1,7 @@
 #coding:utf-8
 from django import forms
 from django.forms import ModelForm
-from django.forms.widgets import PasswordInput
+from django.forms.widgets import PasswordInput , TextInput
 from master.models import Backup, DatosHost
 import shlex, subprocess
 class LoginForm(forms.Form):
@@ -29,4 +29,10 @@ class DatosForm(forms.ModelForm):
 
 	class Meta:
 		model 	= DatosHost
+		fields = ('password','host', 'usuario')
+		widgets = {
+			'password': PasswordInput(attrs = {'class': 'form-control input-sm', 'placeholder':"Password", 'required':"required", 'title':"Debe ingresar un password valido"}),
+			'usuario' : TextInput(attrs = {'class': 'form-control input-sm', 'placeholder': 'usuario', 'required':"required", 'title':"Debe ingresar un usuario valido"}),
+			'host' : TextInput(attrs = {'class': 'form-control input-sm', 'placeholder': 'host', 'required':"required", 'title':"Debe ingresar un host valido"}),
+		}
 

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="row">
+	<div class="login_form">
+
+		<form action="" method="post"> {% csrf_token %}
+			<legend>Datos Servidor</legend>
+			{{error}}
+			<div class="form-group login_campos">
+				{{formulario.host.label}}
+				{{formulario.host.error}}
+				{{formulario.host}}
+				{{formulario.usuario.label}}
+				{{formulario.usuario.error}}
+				{{formulario.usuario}}
+				{{formulario.password.label}}
+				{{formulario.password.error}}
+				{{formulario.password}}
+			</div>
+			<input type="submit" value="Guardar" class="btn btn-primary">
+		</form>
+	</div>
+</div>
+
+{% endblock contenido %}

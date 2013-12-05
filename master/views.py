@@ -46,11 +46,15 @@ def vista_crear_backup(request):
 			lista_db_request = map(str.strip, str(dato.base_nombre).split(','))
 			for db in lista_db_request:
 				if db in lista_db:
-					generador_nombre_db = db + '-' +str(datetime.datetime.now().strftime('%m-%d-%Y-%I:%M:%S-%p-%Z'))
-					args_dump = "mysqldump  --user=%s --host=%s --password=%s  %s > %s%s.sql" % (datos_conexion.usuario,
+					generador_nombre_db = db + '-' +str(datetime.datetime.now().strftime('%m-%d-%Y-%I:%M:%S-%p-%Z')) + '.sql'
+					args_dump = "mysqldump  --user=%s --host=%s --password=%s  %s > %s%s" % (datos_conexion.usuario,
 											datos_conexion.host,datos_conexion.password, db, direccion, generador_nombre_db)
 					proceso_backup = subprocess.Popen(args_dump, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 					dump_output_backup, error_datos_backup = proceso_backup.communicate()
+					backups_manuales = Backup()
+					backups_manuales.base_nombre = generador_nombre_db
+					backups_manuales.save()
+
 			return  HttpResponseRedirect('/')
 	else:
 		formulario = SalvadoForm()
@@ -58,10 +62,11 @@ def vista_crear_backup(request):
 	return render_to_response('backups.html', ctx, context_instance = RequestContext(request))
 
 @login_required(login_url = '/login')
-@datos_decorator
 @crossite_redirection_decorator
 def vista_listar_backups(request):
-	return render_to_response('mostrar_buscar.html',context_instance = RequestContext(request))
+	listar = Backup.objects.all()
+	ctx = {'listar': listar}
+	return render_to_response('mostrar_buscar.html', ctx, context_instance = RequestContext(request))
 
 
 @login_required(login_url = '/login')
@@ -74,7 +79,7 @@ def vista_logout(request):
 
 	except KeyError:
 		return HttpResponseRedirect('/')
-
+@crossite_redirection_decorator
 def vista_login(request):
 	try:
 		meta = request.META['QUERY_STRING'].split('=')[1]
@@ -127,3 +132,29 @@ def vista_datos_de_conexion(request):
 	ctx = {'formulario': formulario, 'error': error}
 
 	return render_to_response('datos.html', ctx, context_instance = RequestContext(request))
+
+@login_required(login_url = '/login')
+@crossite_redirection_decorator
+def vista_editar_datos_de_conexion(request):
+	try:
+		meta = request.META['QUERY_STRING'].split('=')[1]
+	except IndexError:
+		meta = None
+	error= ''
+	consulta = DatosHost.objects.get(pk=1)
+
+	if request.method == 'POST':
+		formulario = DatosForm(request.POST, instance=consulta)
+		if formulario.is_valid():
+			print 'valido'
+			formulario.save()
+			if meta:
+				return HttpResponseRedirect(meta)
+			else:
+				return HttpResponseRedirect('/')
+		else:
+			error = 'Los datos ingresados no son correctos'
+	else:
+		formulario = DatosForm(instance =consulta)
+	ctx = {'formulario': formulario, 'error': error}
+	return render_to_response('editar_datos.html', ctx, context_instance = RequestContext(request))
