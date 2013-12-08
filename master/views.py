@@ -18,7 +18,7 @@ def vista_index(request):
 	p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	dump_output, error = p.communicate()
 	instalado = error
-	estado = dump_output.split('/')[0].split(' ')[1]
+	estado = 'start' in dump_output
 	datoshost = DatosHost.objects.all().count()
 	backup = Backup.objects.all().count()
 	ctx = {'instalado': instalado, 'estado': estado, 'datoshost': datoshost, 'backup': backup}

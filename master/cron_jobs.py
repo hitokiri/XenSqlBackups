@@ -6,6 +6,9 @@ from django.core.exceptions import ObjectDoesNotExist
 import urllib2
 
 def job_function():
+	para 	 = ['lastvnm@gmail.com']
+	asunto 	 = 'cambio de Ip'
+	de_quien = 'Xendra info Cambio de ip'
 	try:
 		myip = urllib2.urlopen('http://www.curlmyip.com').read()
 	except urllib2.HTTPError, e:
@@ -18,9 +21,9 @@ def job_function():
 			ip_history 		= IpServer()
 			ip_history.ip 	= myip
 			ip_history.save()
-			correo = send_mail('cambio de Ip', myip, 'Xendra info Cambio de ip',['lastvnm@gmail.com'], fail_silently=True)
+			correo = send_mail(asunto, myip, de_quien, para, fail_silently=True)
 		if not myip == ip_history.ip:
-			correo = send_mail('cambio de Ip', myip, 'Xendra info Cambio de ip',['lastvnm@gmail.com'], fail_silently=True)
+			correo = send_mail(asunto, myip, de_quien, para, fail_silently=True)
 			ip_history.ip = myip
 			ip_history.save()
 
