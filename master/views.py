@@ -5,9 +5,9 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from master.forms import LoginForm, SalvadoForm, DatosForm
+from master.forms import LoginForm, SalvadoForm, DatosForm, RestoreForm
 from master.decorators import datos_decorator, crossite_redirection_decorator
-from master.models import DatosHost, Backup
+from master.models import DatosHost, Backup, Restore
 import shlex
 import subprocess
 import os
@@ -158,3 +158,14 @@ def vista_editar_datos_de_conexion(request):
 		formulario = DatosForm(instance =consulta)
 	ctx = {'formulario': formulario, 'error': error}
 	return render_to_response('editar_datos.html', ctx, context_instance = RequestContext(request))
+
+def vista_restore_backup_file(request):
+	return render_to_response('restore.html', context_instance = RequestContext(request))
+
+def vista_restore_backup_upfile(request):
+	consulta  = Restore.objects.all()
+	formulario = RestoreForm()
+	if request.method == 'POST':
+		formulario = RestoreForm(request.POST)
+	ctx = {'formulario': formulario}
+	return render_to_response('restore_file.html', ctx, context_instance = RequestContext(request))

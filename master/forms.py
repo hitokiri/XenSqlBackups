@@ -2,7 +2,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.forms.widgets import PasswordInput , TextInput
-from master.models import Backup, DatosHost
+from master.models import Backup, DatosHost, Restore
 import shlex, subprocess
 class LoginForm(forms.Form):
 	usuario 	= forms.CharField(max_length = 20)
@@ -36,3 +36,7 @@ class DatosForm(forms.ModelForm):
 			'host' : TextInput(attrs = {'class': 'form-control input-sm', 'placeholder': 'host', 'required':"required", 'title':"Debe ingresar un host valido"}),
 		}
 
+class RestoreForm(forms.ModelForm):
+    class Meta:
+        model = Restore
+        exclude = ('nombre_archivo',)

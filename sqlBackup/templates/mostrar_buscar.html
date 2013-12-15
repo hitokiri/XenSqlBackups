@@ -11,13 +11,31 @@
 				</div>
 			</div>
 		</legend>
-		<ol>
+
 			 {% for backup in listar %}
-				<li>
-					<a href="{{ STATIC_URL }}SqlBackup/{{backup.base_nombre}}">{{backup.base_nombre}}</a>
-				</li>
+
+				<div class="row">
+					<div class="col-xs-8 col-sm-8 letra-lista">
+						{{backup.base_nombre|cut:"-.sql"}}
+					</div>
+					<div class="col-xs-4 col-sm-4">
+						<div class="btn-group btn-group-xs">
+							<a href="{{ STATIC_URL }}SqlBackup/{{backup.base_nombre}}" class="btn btn-default" title="Descargar">
+								<span class ='glyphicon glyphicon-hdd'></span>
+							</a>
+							<a href="" class="btn btn-default" title="Crear Backup con este Archivo">
+								<span class="glyphicon glyphicon-download-alt"></span>
+							</a>
+							<a href="" class="btn btn-default" title="Subir Archivo para el Backup">
+							<spam class="glyphicon glyphicon-floppy-open"></spam>
+							</a>
+						</div>
+					</div>
+				</div>
+
+
 			 {% endfor %}
-		 </ol>
+
 	</div>
 </div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

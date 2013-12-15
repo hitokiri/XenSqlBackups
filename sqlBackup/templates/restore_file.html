@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="row">
+	<div class="login_form">
+		<form action="" method="POST" role="form" enctype="multipart/form-data">
+			<legend>Form title</legend>
+
+			<div class="form-group">
+
+				{{formulario.subido}}
+			</div>
+			<button type="submit" class="btn btn-primary">Crear Restore</button>
+		</form>
+	</div>
+</div>
+
+
+{% endblock contenido %}

@@ -54,3 +54,15 @@ form legend{
 }
 
 /*index cosas*/
+/* acciones de backups*/
+.letra-lista{
+	font-size: .97em;
+}
+.login_form{
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0,0,0,.5);
+	max-width: 40%;
+	padding: 3% 3% 3% 5%;
+	margin-left: 30%;
+	margin-top: 5%;
+}
