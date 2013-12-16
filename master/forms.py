@@ -40,3 +40,6 @@ class RestoreForm(forms.ModelForm):
     class Meta:
         model = Restore
         exclude = ('nombre_archivo',)
+
+class UploadFileForm(forms.Form):
+	subir_backup = forms.FileField()

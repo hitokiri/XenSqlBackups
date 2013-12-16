@@ -1,41 +1,58 @@
 {% extends "base.html" %}
-
+{% block scriptExtra %}
+	<script src="{{ STATIC_URL }}js/backup.js"></script>
+{% endblock scriptExtra %}
 {% block contenido %}
 <div class="row">
+{% autoescape off %}
+	{{formulario.subir_backup.errors}}
+{% endautoescape %}
+
 	<div class="login_form">
 		<legend>
 			<div class="row">
-				<div class="col-xs-10 col-sm-10">Listado de Backups</div>
-				<div class="col-xs-2 col-sm-2">
+				<div class="col-xs-9 col-sm-9">Listado de Backups</div>
+				<div class="col-xs-3 col-sm-3">
 					<span class='ayuda_form glyphicon glyphicon-info-sign' data-toggle="modal" data-target="#myModal" title="Ayuda" > </span>
+					<button class="btn btn-info accion btn-xs" title="Subir Archivo para el Backup" name='.clase1 '>
+						<spam class="glyphicon glyphicon-floppy-open"></spam>
+					</button>
 				</div>
 			</div>
 		</legend>
 
-			 {% for backup in listar %}
+			{% for backup in listar %}
 
 				<div class="row">
-					<div class="col-xs-8 col-sm-8 letra-lista">
-						{{backup.base_nombre|cut:"-.sql"}}
+					<div class="col-xs-8 col-sm-8 " id='texto_lista'>
+						{{forloop.counter}}. {{backup.base_nombre|cut:"-.sql"}}
 					</div>
-					<div class="col-xs-4 col-sm-4">
-						<div class="btn-group btn-group-xs">
-							<a href="{{ STATIC_URL }}SqlBackup/{{backup.base_nombre}}" class="btn btn-default" title="Descargar">
+					<div class="col-xs-4 col-sm-4" id="sin_padding">
+						<div class=" btn-group-sm" >
+							<a href="{{ STATIC_URL }}SqlBackup/{{backup.base_nombre}}" class="btn btn-success" title="Descargar">
 								<span class ='glyphicon glyphicon-hdd'></span>
 							</a>
-							<a href="" class="btn btn-default" title="Crear Backup con este Archivo">
+							<a href="" class="btn btn-warning" title="Crear Backup con este Archivo">
 								<span class="glyphicon glyphicon-download-alt"></span>
 							</a>
-							<a href="" class="btn btn-default" title="Subir Archivo para el Backup">
-							<spam class="glyphicon glyphicon-floppy-open"></spam>
-							</a>
+
 						</div>
 					</div>
 				</div>
-
-
-			 {% endfor %}
-
+			{% endfor %}
+			<form action="" method="post" enctype="multipart/form-data">
+				<div class="clase1" style="display:none">
+					<div class="row">
+						<div class="col-xs-10 col-sm-10">
+								{% csrf_token %}
+								{{formulario.subir_backup}}
+						</div>
+						<div class="col-xs-2 col-sm-2" >
+							<button type="submit" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-circle-arrow-right"></span></button>
+						</div>
+					</div>
+				</div>
+			</form>
 	</div>
 </div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -54,4 +71,7 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+
 {% endblock contenido %}

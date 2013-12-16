@@ -5,8 +5,9 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from master.forms import LoginForm, SalvadoForm, DatosForm, RestoreForm
+from master.forms import LoginForm, SalvadoForm, DatosForm, RestoreForm, UploadFileForm
 from master.decorators import datos_decorator, crossite_redirection_decorator
+from django.forms.util import ErrorList
 from master.models import DatosHost, Backup, Restore
 import shlex
 import subprocess
@@ -64,8 +65,22 @@ def vista_crear_backup(request):
 @login_required(login_url = '/login')
 @crossite_redirection_decorator
 def vista_listar_backups(request):
+	class DivErrorList(ErrorList):
+		def __unicode__(self):
+			return self.as_divs()
+		def as_divs(self):
+			a =0
+			if not self: return u''
+			print self[0]
+			return u'<div class="errorlist">%s</div>' % ''.join([u'<div class="alert alert-danger alert-dismissable">%s</div>' % 'No se selecciono ningun Archivo',])
 	listar = Backup.objects.all()
-	ctx = {'listar': listar}
+	if request.method == 'POST':
+		formulario = UploadFileForm(request.POST, request.FILES, error_class=DivErrorList)
+		if formulario.is_valid():
+			print request.FILES['subir_backup']
+	else:
+		formulario = UploadFileForm(error_class=DivErrorList)
+	ctx = {'listar': listar, 'formulario': formulario}
 	return render_to_response('mostrar_buscar.html', ctx, context_instance = RequestContext(request))
 
 
